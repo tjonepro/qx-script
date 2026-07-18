@@ -90,9 +90,13 @@
         updateMeta("twitter:title", pageTitle);
 
         // Hide deposit bonus div
-        const depdiv = document.querySelector("div.r7UKG");
-        if (depdiv) {
-            depdiv.style.display = "none";
+        const depdivpc = document.querySelector("div.r7UKG");
+        const depdivmobile = document.querySelector("div.q04vx.o2msZ");
+        if (depdivpc) {
+            depdivpc.style.display = "none";
+        }
+        if (depdivmobile) {
+            depdivmobile.style.display = "none";
         }
 
 
@@ -308,10 +312,11 @@
 
 
         // Change "Demo Account" -> "Live Account"
+        const isMobile = window.innerWidth <= 768;
         const el = document.querySelector("div.v2KPX.lTzTl");
 
         if (el) {
-            el.textContent = "Live Account";
+            el.textContent = isMobile ? "Live" : "Live Account";
             el.classList.replace("lTzTl", "X6PB5");
         }
 
@@ -372,7 +377,7 @@
         subtree: true
     });
 
-    // Check every 500 milliseconds for balance changes
+    // Check every 50 milliseconds for balance changes
     setInterval(updateElement, 50);
 
 })();
