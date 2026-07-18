@@ -1,12 +1,3 @@
-// ==UserScript==
-// @name         QX
-// @namespace    https://qxbroker.com/
-// @version      1.0
-// @description  Qx Script
-// @match        https://qxbroker.com/*
-// @grant        none
-// ==/UserScript==
-
 (function () {
     'use strict';
 
