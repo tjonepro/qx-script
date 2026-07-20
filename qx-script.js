@@ -296,7 +296,7 @@
 
                ];
 
-               fakePayments.slice(0, 10).reverse().forEach(function (p) {
+               fakePayments.slice(0, 20).reverse().forEach(function (p) {
 
                    const row = firstRow.cloneNode(true);
                    row.style.display = ""; // Make sure clone is visible
