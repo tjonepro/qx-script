@@ -201,7 +201,7 @@
                        status: "Successed",
                        type: "Payout",
                        system: "USDT",
-                       amount: "-287.20",
+                       amount: "-$287.20",
                        color: "#ff5b5b"
                    },
 				   {
@@ -210,7 +210,7 @@
                        status: "Successed",
                        type: "Payout",
                        system: "USDT",
-                       amount: "-367.25",
+                       amount: "-$367.25",
                        color: "#ff5b5b"
                    },
 				   {
@@ -219,7 +219,7 @@
                        status: "Successed",
                        type: "Payout",
                        system: "USDT",
-                       amount: "-423.66",
+                       amount: "-$423.66",
                        color: "#ff5b5b"
                    },
 				   {
@@ -228,7 +228,7 @@
                        status: "Successed",
                        type: "Payout",
                        system: "USDT",
-                       amount: "-266.78",
+                       amount: "-$266.78",
                        color: "#ff5b5b"
                    },
 				   {
