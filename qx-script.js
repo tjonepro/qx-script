@@ -71,18 +71,27 @@
 	// Leaderboard display
 	function UpdatePNLDisplay() {
     const pnlElement = document.querySelector("div.ord28.o8xRM");
+	const pnlPosition = document.querySelector("div.c_7BP");
+    const pnlPositionBar = document.querySelector("span.uQuVa");
 
     if (!pnlElement) {
         return;
     }
 
     pnlElement.textContent = (PNLTotal >= 0 ? "+" : "-") + "$" + Math.abs(PNLTotal).toFixed(2);
+        pnlPosition.childNodes.forEach(node => {
+            if (node.nodeType === 3 && node.textContent.trim() === "-") {
+                node.textContent = "100+";
+            }
+        });
 
         if (PNLTotal > 0) {
             pnlElement.style.color = "#00c853";
+            pnlPositionBar.style.width = "95%";
         }
         else if (PNLTotal < 0) {
             pnlElement.style.color = "#ff3d00";
+            pnlPositionBar.style.width = "10%";
         }
         else {
             pnlElement.style.color = "#00c853";
