@@ -70,6 +70,7 @@
 
 	// Leaderboard display
 	function UpdatePNLDisplay() {
+	console.log("UpdatePNLDisplay()", { PNLTotal, TradeTotal, TradeWin, TradeLoss});
     const pnlElement = document.querySelector("div.ord28.o8xRM");
 	const pnlPosition = document.querySelector("div.c_7BP");
     const pnlPositionBar = document.querySelector("span.uQuVa");
@@ -454,13 +455,28 @@
         if (!topBtn || topBtn.textContent.trim() !== "TOP") {
             return;
         }
+
         const timer = setInterval(() => {
-            if (document.querySelector("div.ord28.o8xRM")) {
-                clearInterval(timer);
-                UpdatePNLDisplay();
+            const pnlElement = document.querySelector("div.ord28.o8xRM");
+            const pnlPosition = document.querySelector("div.c_7BP");
+            const pnlBar = document.querySelector("span.uQuVa");
+
+            // Wait until ALL required elements exist
+            if (!pnlElement || !pnlPosition || !pnlBar) {
+                return;
             }
+
+            clearInterval(timer);
+
+            // Wait until Quotex finishes rendering
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    UpdatePNLDisplay();
+                });
+            });
         }, 20);
     });
+
 	
 
     // Detect Result Popup
