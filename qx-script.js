@@ -193,15 +193,14 @@
 
            if (firstRow) {
 
-               const fakePayments = [
-				   
+               const fakePayments = [	   
 				   {
                        id: "51273648108",
                        date: "18/07/2026, 10:14:12",
                        status: "Successed",
                        type: "Payout",
                        system: "USDT",
-                       amount: "-$287.20",
+                       amount: "+$287.20",
                        color: "#ff5b5b"
                    },
 				   {
@@ -210,7 +209,7 @@
                        status: "Successed",
                        type: "Payout",
                        system: "USDT",
-                       amount: "-$367.25",
+                       amount: "+$367.25",
                        color: "#ff5b5b"
                    },
 				   {
@@ -219,7 +218,7 @@
                        status: "Successed",
                        type: "Payout",
                        system: "USDT",
-                       amount: "-$423.66",
+                       amount: "+$423.66",
                        color: "#ff5b5b"
                    },
 				   {
@@ -228,7 +227,7 @@
                        status: "Successed",
                        type: "Payout",
                        system: "USDT",
-                       amount: "-$266.78",
+                       amount: "+$266.78",
                        color: "#ff5b5b"
                    },
 				   {
@@ -237,7 +236,7 @@
                        status: "Successed",
                        type: "Payout",
                        system: "USDT",
-                       amount: "-$287.15",
+                       amount: "+$287.15",
                        color: "#ff5b5b"
                    },
 				   {
@@ -246,7 +245,7 @@
                        status: "Successed",
                        type: "Payout",
                        system: "USDT",
-                       amount: "-$422.65",
+                       amount: "+$422.65",
                        color: "#ff5b5b"
                    },
                    {
@@ -255,7 +254,7 @@
                        status: "Successed",
                        type: "Payout",
                        system: "USDT",
-                       amount: "-$325.45",
+                       amount: "+$325.45",
                        color: "#ff5b5b"
                    },
                    {
@@ -264,7 +263,7 @@
                        status: "Successed",
                        type: "Payout",
                        system: "USDT",
-                       amount: "-$354.78",
+                       amount: "+$354.78",
                        color: "#ff5b5b"
                    },
                    {
@@ -273,7 +272,7 @@
                        status: "Successed",
                        type: "Payout",
                        system: "USDT",
-                       amount: "-$254.85",
+                       amount: "+$254.85",
                        color: "#ff5b5b"
                    },
                    {
@@ -282,7 +281,7 @@
                        status: "Successed",
                        type: "Payout",
                        system: "USDT",
-                       amount: "-$320.00",
+                       amount: "+$320.00",
                        color: "#ff5b5b"
                    },
                    {
