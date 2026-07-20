@@ -21,7 +21,54 @@
         meta.setAttribute("content", contentValue);
     }
 
-    let paymentInterval = null;
+    let IsInitialized = false;
+    let PaymentInterval = null;
+    let DemoBalancePrev = 0;
+    let TradeTotal = 0;
+    let TradeWin = 0;
+    let TradeLoss = 0;
+    let OpenTrades = [];
+    let PNLTotal = 0; // Total Profit & Loss
+    let LastPopupText = "";
+
+    // Daily Stats
+    //localStorage.removeItem("QX_DAILY_STATS");
+    const STORAGE_KEY = "QX_DAILY_STATS";
+    function getToday() {
+        const d = new Date();
+        return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+    }
+
+    function SaveDailyStats() {
+        PNLTotal = parseFloat(PNLTotal) || 0;
+        PNLTotal = +PNLTotal.toFixed(2);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({date: getToday(), total: TradeTotal, win: TradeWin, loss: TradeLoss, pnl: PNLTotal}));
+    }
+
+    function LoadDailyStats() {
+        const today = getToday();
+        const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+
+        if (!data || data.date !== today) {
+            TradeTotal = 0;
+            TradeWin = 0;
+            TradeLoss = 0;
+            PNLTotal = 0;
+
+            SaveDailyStats();
+            return;
+        }
+
+        TradeTotal = data.total || 0;
+        TradeWin = data.win || 0;
+        TradeLoss = data.loss || 0;
+        PNLTotal = parseFloat(data.pnl) || 0;
+        console.table({TradeTotal, TradeWin, TradeLoss, PNLTotal: +PNLTotal.toFixed(2)});
+    }
+
+    LoadDailyStats();
+
+
     function updateElement() {
 
         // Change URL shown in address bar
@@ -323,19 +370,41 @@
         // Change SVG class and icon based on account level
         const svg = document.querySelector("svg.icon-academic, svg.icon-profile-level-standart, svg.icon-profile-level-pro, svg.icon-profile-level-vip");
         const levelElement = document.querySelector("div.Zt1hG");
-        let demoBalance = 0;
+        let DemoBalance = 0;
+        let DemoBalanceNow = 0;
 
         if (levelElement) {
-            demoBalance = parseInt(levelElement.textContent.split(".")[0].replace(/[^\d]/g, ""), 10) || 0;
+            DemoBalance = parseInt(levelElement.textContent.split(".")[0].replace(/[^\d]/g, ""), 10) || 0;
+            DemoBalanceNow = parseFloat(levelElement.textContent.replace(/[$,]/g, "")) || 0;
+
+	    // First time only
+            if (!IsInitialized) {
+                DemoBalancePrev = DemoBalanceNow;
+                IsInitialized = true;
+                return;
+            }
+
+	    const Diff = +(DemoBalanceNow - DemoBalancePrev).toFixed(2);
+
+	    // Trade Opened
+            if (Diff < 0) {
+
+                OpenTrades.push(-Diff);
+                console.log("Trade Opened", "Stake:", -Diff, "Open Trades:", OpenTrades.length);
+            }
+            if (DemoBalanceNow !== DemoBalancePrev) {
+                DemoBalancePrev = DemoBalanceNow;
+            }
         }
+
 
         if (svg) {
 
-            if (demoBalance >= 10000) {
+            if (DemoBalance >= 10000) {
                 svg.classList.remove("icon-academic", "icon-profile-level-standart", "icon-profile-level-pro", "icon-profile-level-vip");
                 svg.classList.add("icon-profile-level-vip");
             }
-            else if (demoBalance >= 5000) {
+            else if (DemoBalance >= 5000) {
                 svg.classList.remove("icon-academic", "icon-profile-level-standart", "icon-profile-level-pro", "icon-profile-level-vip");
                 svg.classList.add("icon-profile-level-pro");
             }
@@ -349,10 +418,10 @@
 
                 let icon = "/profile/images/spritemap.svg#icon-profile-level-standart";
 
-                if (demoBalance >= 10000) {
+                if (DemoBalance >= 10000) {
                     icon = "/profile/images/spritemap.svg#icon-profile-level-vip";
                 }
-                else if (demoBalance >= 5000) {
+                else if (DemoBalance >= 5000) {
                     icon = "/profile/images/spritemap.svg#icon-profile-level-pro";
                 }
                 else {
@@ -376,6 +445,81 @@
         childList: true,
         subtree: true
     });
+
+
+    // Detect Result Popup
+    const popupObserver = new MutationObserver((mutations) => {
+        mutations.forEach(mutation => {
+            mutation.addedNodes.forEach(node => {
+
+            if (!(node instanceof HTMLElement))
+            {
+                return;
+            }
+
+            // Detect the popup itself or if it is inside another node
+            const popup = node.matches(".LYJYG") ? node : node.querySelector(".LYJYG");
+
+            if (!popup)
+            {
+                return;
+            }
+
+            const popupText = popup.innerText.trim();
+
+            if (!popupText)
+            {
+                return;
+            }
+
+            if (popup.dataset.done)
+            {
+                return;
+            }
+
+            popup.dataset.done = "1";
+
+            const amountElement = popup.querySelector(".GIbOO");
+
+            if (!amountElement)
+            {
+                return;
+            }
+
+            const amountText = amountElement.innerText.trim();
+
+            // Trade WIN
+            if (amountText.startsWith("+")) {
+
+                const amount = parseFloat(amountText.replace(/[^\d.]/g, ""));
+                const StakeAmount = OpenTrades.shift() || 0;
+                TradeTotal++;
+                TradeWin++;
+                PNLTotal += amount - StakeAmount;
+                SaveDailyStats();
+                console.table({TradeTotal, TradeWin, TradeLoss, PNLTotal: +PNLTotal.toFixed(2)});
+            }
+            // Trade LOSS
+            else
+            {
+                const StakeAmount = OpenTrades.shift() || 0;
+                TradeTotal++;
+                TradeLoss++;
+                PNLTotal -= StakeAmount;
+                SaveDailyStats();
+                console.table({TradeTotal, TradeWin, TradeLoss, PNLTotal: +PNLTotal.toFixed(2)});
+            }
+
+            });
+        });
+    });
+
+
+    popupObserver.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+
 
     // Check every 50 milliseconds for balance changes
     setInterval(updateElement, 50);
