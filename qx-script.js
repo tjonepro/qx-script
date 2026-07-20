@@ -194,127 +194,91 @@
            if (firstRow) {
 
                const fakePayments = [
-
-                   {
-                       id: "5127348901",
-                       date: "16/07/2026, 11:30:52",
+				   
+				   {
+                       id: "51273648108",
+                       date: "18/07/2026, 10:14:12",
                        status: "Successed",
-                       type: "Deposit",
-                       system: "USDT (TRC-20)",
-                       amount: "+$500.00",
-                       color: "#18c964"
+                       type: "Payout",
+                       system: "USDT",
+                       amount: "-287.20",
+                       color: "#ff5b5b"
+                   },
+				   {
+                       id: "51273600384",
+                       date: "12/07/2026, 09:16:56",
+                       status: "Successed",
+                       type: "Payout",
+                       system: "USDT",
+                       amount: "-367.25",
+                       color: "#ff5b5b"
+                   },
+				   {
+                       id: "51273638515",
+                       date: "10/07/2026, 09:48:12",
+                       status: "Successed",
+                       type: "Payout",
+                       system: "USDT",
+                       amount: "-423.66",
+                       color: "#ff5b5b"
+                   },
+				   {
+                       id: "51273626055",
+                       date: "09/07/2026, 07:18:41",
+                       status: "Successed",
+                       type: "Payout",
+                       system: "USDT",
+                       amount: "-266.78",
+                       color: "#ff5b5b"
+                   },
+				   {
+                       id: "51273552660",
+                       date: "06/07/2026, 08:22:54",
+                       status: "Successed",
+                       type: "Payout",
+                       system: "USDT",
+                       amount: "-$287.15",
+                       color: "#ff5b5b"
+                   },
+				   {
+                       id: "51273563771",
+                       date: "04/07/2026, 10:12:18",
+                       status: "Successed",
+                       type: "Payout",
+                       system: "USDT",
+                       amount: "-$422.65",
+                       color: "#ff5b5b"
                    },
                    {
-                       id: "5127348901",
-                       date: "16/07/2026, 11:30:52",
+                       id: "51273551313",
+                       date: "03/07/2026, 09:45:15",
                        status: "Successed",
-                       type: "Deposit",
-                       system: "USDT (TRC-20)",
-                       amount: "+$500.00",
-                       color: "#18c964"
+                       type: "Payout",
+                       system: "USDT",
+                       amount: "-$325.45",
+                       color: "#ff5b5b"
                    },
                    {
-                       id: "5127348901",
-                       date: "16/07/2026, 11:30:52",
+                       id: "51273538856",
+                       date: "02/07/2026, 08:23:18",
                        status: "Successed",
-                       type: "Deposit",
-                       system: "USDT (TRC-20)",
-                       amount: "+$500.00",
-                       color: "#18c964"
+                       type: "Payout",
+                       system: "USDT",
+                       amount: "-$354.78",
+                       color: "#ff5b5b"
                    },
                    {
-                       id: "5127348901",
-                       date: "16/07/2026, 11:30:52",
+                       id: "51273513942",
+                       date: "30/06/2026, 11:45:23",
                        status: "Successed",
-                       type: "Deposit",
-                       system: "USDT (TRC-20)",
-                       amount: "+$500.00",
-                       color: "#18c964"
+                       type: "Payout",
+                       system: "USDT",
+                       amount: "-$254.85",
+                       color: "#ff5b5b"
                    },
                    {
-                       id: "5127348901",
-                       date: "16/07/2026, 11:30:52",
-                       status: "Successed",
-                       type: "Deposit",
-                       system: "USDT (TRC-20)",
-                       amount: "+$500.00",
-                       color: "#18c964"
-                   },
-                   {
-                       id: "5127348901",
-                       date: "16/07/2026, 11:30:52",
-                       status: "Successed",
-                       type: "Deposit",
-                       system: "USDT (TRC-20)",
-                       amount: "+$500.00",
-                       color: "#18c964"
-                   },
-                   {
-                       id: "5127348901",
-                       date: "16/07/2026, 11:30:52",
-                       status: "Successed",
-                       type: "Deposit",
-                       system: "USDT (TRC-20)",
-                       amount: "+$500.00",
-                       color: "#18c964"
-                   },
-                   {
-                       id: "5127348901",
-                       date: "16/07/2026, 11:30:52",
-                       status: "Successed",
-                       type: "Deposit",
-                       system: "USDT (TRC-20)",
-                       amount: "+$500.00",
-                       color: "#18c964"
-                   },
-                   {
-                       id: "5127348901",
-                       date: "16/07/2026, 11:30:52",
-                       status: "Successed",
-                       type: "Deposit",
-                       system: "USDT (TRC-20)",
-                       amount: "+$500.00",
-                       color: "#18c964"
-                   },
-                   {
-                       id: "5127348901",
-                       date: "16/07/2026, 11:30:52",
-                       status: "Successed",
-                       type: "Deposit",
-                       system: "USDT (TRC-20)",
-                       amount: "+$500.00",
-                       color: "#18c964"
-                   },
-                   {
-                       id: "5127348901",
-                       date: "16/07/2026, 11:30:52",
-                       status: "Successed",
-                       type: "Deposit",
-                       system: "USDT (TRC-20)",
-                       amount: "+$500.00",
-                       color: "#18c964"
-                   },
-                   {
-                       id: "5127348901",
-                       date: "16/07/2026, 11:30:52",
-                       status: "Successed",
-                       type: "Deposit",
-                       system: "USDT (TRC-20)",
-                       amount: "+$500.00",
-                       color: "#18c964"
-                   },
-                   {
-                       id: "5127348901",
-                       date: "16/07/2026, 11:30:52",
-                       status: "Successed",
-                       type: "Deposit",
-                       system: "USDT (TRC-20)",
-                       amount: "+$500.00",
-                       color: "#18c964"
-                   },
-                   {
-                       id: "5127348902",
-                       date: "15/07/2026, 19:21:40",
+                       id: "51273489028",
+                       date: "28/06/2026, 13:54:12",
                        status: "Successed",
                        type: "Payout",
                        system: "USDT",
@@ -322,8 +286,8 @@
                        color: "#ff5b5b"
                    },
                    {
-                       id: "5127348903",
-                       date: "14/07/2026, 08:15:18",
+                       id: "105859888",
+                       date: "26/06/2026, 08:15:18",
                        status: "Successed",
                        type: "Deposit",
                        system: "USDT (BEP-20)",
@@ -390,7 +354,7 @@
             if (Diff < 0) {
 
                 OpenTrades.push(-Diff);
-                console.log("Trade Opened", "Stake:", -Diff, "Open Trades:", OpenTrades.length);
+				console.log("Trade Opened - ", "Amount:", -Diff, "Trade Counts:", OpenTrades.length);
             }
             if (DemoBalanceNow !== DemoBalancePrev) {
                 DemoBalancePrev = DemoBalanceNow;
