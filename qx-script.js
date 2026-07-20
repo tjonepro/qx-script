@@ -68,6 +68,26 @@
 
     LoadDailyStats();
 
+	// Leaderboard display
+	function UpdatePNLDisplay() {
+    const pnlElement = document.querySelector("div.ord28.o8xRM");
+
+    if (!pnlElement) {
+        return;
+    }
+
+    pnlElement.textContent = (PNLTotal >= 0 ? "+" : "-") + "$" + Math.abs(PNLTotal).toFixed(2);
+
+        if (PNLTotal > 0) {
+            pnlElement.style.color = "#00c853";
+        }
+        else if (PNLTotal < 0) {
+            pnlElement.style.color = "#ff3d00";
+        }
+        else {
+            pnlElement.style.color = "#00c853";
+        }
+    }
 
     function updateElement() {
 
@@ -418,6 +438,21 @@
         subtree: true
     });
 
+
+	// For TOP Button (PC + Mobile)
+    document.addEventListener("click", function (e) {
+        const topBtn = e.target.closest(".KYcVi, .IM80M");
+        if (!topBtn || topBtn.textContent.trim() !== "TOP") {
+            return;
+        }
+        const timer = setInterval(() => {
+            if (document.querySelector("div.ord28.o8xRM")) {
+                clearInterval(timer);
+                UpdatePNLDisplay();
+            }
+        }, 20);
+    });
+	
 
     // Detect Result Popup
     const popupObserver = new MutationObserver((mutations) => {
