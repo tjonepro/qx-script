@@ -284,6 +284,15 @@
                        amount: "-$320.00",
                        color: "#ff5b5b"
                    },
+				   {
+                       id: "51273145784",
+                       date: "27/06/2026, 11:45:09",
+                       status: "Successed",
+                       type: "Payout",
+                       system: "USDT",
+                       amount: "-$226.22",
+                       color: "#ff5b5b"
+                   },
                    {
                        id: "105859888",
                        date: "26/06/2026, 08:15:18",
