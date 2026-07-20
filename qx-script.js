@@ -78,7 +78,7 @@
         return;
     }
 
-    pnlElement.textContent = (PNLTotal >= 0 ? "+" : "-") + "$" + Math.abs(PNLTotal).toFixed(2);
+    pnlElement.textContent = "$" + Math.abs(PNLTotal).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
         pnlPosition.childNodes.forEach(node => {
             if (node.nodeType === 3 && node.textContent.trim() === "-") {
                 node.textContent = "100+";
