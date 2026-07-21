@@ -18,20 +18,7 @@
         firebase.initializeApp(firebaseConfig);
     }
     const db = firebase.database();
-    //console.log("Database URL:", db.app.options.databaseURL);
-
-    db.ref("QX_DAILY_STATS/" + getToday()).on("value", function (snapshot) {
-        if (!snapshot.exists()) return;
-        const data = snapshot.val();
-        TradeTotal = data.total || 0;
-        TradeWin = data.win || 0;
-        TradeLoss = data.loss || 0;
-        PNLTotal = data.pnl || 0;
-
-        UpdatePNLDisplay();
-    });
-
-	
+    
     // automatically open the real demo page.
     if (window.location.pathname === "/en/trade") {
         window.location.replace("/en/demo-trade");
@@ -52,6 +39,7 @@
         meta.setAttribute("content", contentValue);
     }
 
+	let UID = null;
     let IsInitialized = false;
     let PaymentInterval = null;
     let DemoBalancePrev = 0;
@@ -63,33 +51,25 @@
     let LastPopupText = "";
 
     // Daily Stats
-    localStorage.removeItem("QX_DAILY_STATS");
     const STORAGE_KEY = "QX_DAILY_STATS";
     function getToday() {
         const d = new Date();
         return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
     }
 
-    // function SaveDailyStats() {
-    //     PNLTotal = parseFloat(PNLTotal) || 0;
-    //     PNLTotal = +PNLTotal.toFixed(2);
-    //     localStorage.setItem(STORAGE_KEY, JSON.stringify({date: getToday(), total: TradeTotal, win: TradeWin, loss: TradeLoss, pnl: PNLTotal}));
-    // }
-
     async function SaveDailyStats() {
         try {
             PNLTotal = +parseFloat(PNLTotal || 0).toFixed(2);
-            await db.ref("QX_DAILY_STATS/" + getToday()).set({total: TradeTotal, win: TradeWin, loss: TradeLoss, pnl: PNLTotal});
-            console.log("Saved to Firebase", {total: TradeTotal, win: TradeWin, loss: TradeLoss, pnl: PNLTotal});
+            await db.ref("QX_DAILY_STATS/" + UID + "/" + getToday()).set({Total: TradeTotal, Win: TradeWin, Loss: TradeLoss, PNL: PNLTotal});
+            console.log("Daily stats successfully saved.");
         }
         catch (err) {
-            console.log("Failed to write Firebase.");
-            console.error(err);
+            console.log("Failed to saved daily stats.");
         }
     }
 
     async function LoadDailyStats() {
-        const snap = await db.ref("QX_DAILY_STATS/" + getToday()).get();
+        const snap = await db.ref("QX_DAILY_STATS/" + UID + "/" + getToday()).get();
         if (!snap.exists()) {
             TradeTotal = 0;
             TradeWin = 0;
@@ -100,14 +80,13 @@
         }
 
         const data = snap.val();
-        TradeTotal = data.total || 0;
-        TradeWin = data.win || 0;
-        TradeLoss = data.loss || 0;
-        PNLTotal = data.pnl || 0;
+        TradeTotal = data.Total || 0;
+        TradeWin = data.Win || 0;
+        TradeLoss = data.Loss || 0;
+        PNLTotal = data.PNL || 0;
         UpdatePNLDisplay();
     }
 	
-    LoadDailyStats();
 
 	// Leaderboard display
 	function UpdatePNLDisplay() {
@@ -417,12 +396,16 @@
         let DemoBalanceNow = 0;
 
         if (levelElement) {
+			UID = window.settings?.id?.toString() || "";
             DemoBalance = parseInt(levelElement.textContent.split(".")[0].replace(/[^\d]/g, ""), 10) || 0;
             DemoBalanceNow = parseFloat(levelElement.textContent.replace(/[$,]/g, "")) || 0;
 
-	    // First time only
+			if (!UID) return;
+			
+	    	// First time only
             if (!IsInitialized) {
                 DemoBalancePrev = DemoBalanceNow;
+				LoadDailyStats(); // Load only once
                 IsInitialized = true;
                 return;
             }
