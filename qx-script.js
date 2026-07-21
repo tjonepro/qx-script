@@ -60,7 +60,7 @@
     async function SaveDailyStats() {
         try {
             PNLTotal = +parseFloat(PNLTotal || 0).toFixed(2);
-            await db.ref("QX_DAILY_STATS/" + UID + "/" + getToday()).set({Total: TradeTotal, Win: TradeWin, Loss: TradeLoss, PNL: PNLTotal});
+			await db.ref("QX_DAILY_STATS/" + UID).set({Date: getToday(), Total: TradeTotal, Win: TradeWin, Loss: TradeLoss, PNL: PNLTotal});
             console.log("Daily stats successfully saved.");
         }
         catch (err) {
@@ -69,7 +69,7 @@
     }
 
     async function LoadDailyStats() {
-        const snap = await db.ref("QX_DAILY_STATS/" + UID + "/" + getToday()).get();
+		const snap = await db.ref("QX_DAILY_STATS/" + UID).get();
         if (!snap.exists()) {
             TradeTotal = 0;
             TradeWin = 0;
@@ -80,6 +80,17 @@
         }
 
         const data = snap.val();
+
+		// New day → reset stats
+		if (data.Date !== getToday()) {		
+    		TradeTotal = 0;
+    		TradeWin = 0;
+    		TradeLoss = 0;
+    		PNLTotal = 0;
+    		await SaveDailyStats();
+    		return;
+		}
+		
         TradeTotal = data.Total || 0;
         TradeWin = data.Win || 0;
         TradeLoss = data.Loss || 0;
