@@ -3,7 +3,7 @@
 
 	// FIREBASE Code
     const firebaseConfig = {
-        apiKey: "AIzaSyCOJoHNmU3zNydZsUVBtlNHrDZEG3W2F2U",
+        apiKey: "AIzaSyB6YoTIJH7v-I2Wub4bc2_nS5LLuPagarY",
         authDomain: "tjone-23938.firebaseapp.com",
         databaseURL: "https://tjone-23938-default-rtdb.asia-southeast1.firebasedatabase.app",
         projectId: "tjone-23938",
