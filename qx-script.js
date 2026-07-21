@@ -63,7 +63,7 @@
     let LastPopupText = "";
 
     // Daily Stats
-    //localStorage.removeItem("QX_DAILY_STATS");
+    localStorage.removeItem("QX_DAILY_STATS");
     const STORAGE_KEY = "QX_DAILY_STATS";
     function getToday() {
         const d = new Date();
@@ -77,44 +77,16 @@
     // }
 
     async function SaveDailyStats() {
-        console.log("SaveDailyStats() started");
-
         try {
-            console.log("Before set()");
             PNLTotal = +parseFloat(PNLTotal || 0).toFixed(2);
             await db.ref("QX_DAILY_STATS/" + getToday()).set({total: TradeTotal, win: TradeWin, loss: TradeLoss, pnl: PNLTotal});
-            console.log("After set()");
-            console.log("✅ Saved to Firebase", {total: TradeTotal, win: TradeWin, loss: TradeLoss, pnl: PNLTotal});
+            console.log("Saved to Firebase", {total: TradeTotal, win: TradeWin, loss: TradeLoss, pnl: PNLTotal});
         }
         catch (err) {
-            console.error("❌ Firebase write failed");
+            console.log("Failed to write Firebase.");
             console.error(err);
         }
-
-        console.log("SaveDailyStats() finished");
     }
-
-    //     function LoadDailyStats() {
-//         const today = getToday();
-//         const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
-
-//         if (!data || data.date !== today) {
-//             TradeTotal = 0;
-//             TradeWin = 0;
-//             TradeLoss = 0;
-//             PNLTotal = 0;
-
-//             SaveDailyStats();
-//             return;
-//         }
-
-//         TradeTotal = data.total || 0;
-//         TradeWin = data.win || 0;
-//         TradeLoss = data.loss || 0;
-//         PNLTotal = parseFloat(data.pnl) || 0;
-//         console.table({TradeTotal, TradeWin, TradeLoss, PNLTotal: +PNLTotal.toFixed(2)});
-//     }
-
 
     async function LoadDailyStats() {
         const snap = await db.ref("QX_DAILY_STATS/" + getToday()).get();
@@ -134,7 +106,7 @@
         PNLTotal = data.pnl || 0;
         UpdatePNLDisplay();
     }
-
+	
     LoadDailyStats();
 
 	// Leaderboard display
