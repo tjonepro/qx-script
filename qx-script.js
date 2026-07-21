@@ -1,6 +1,37 @@
 (function () {
     'use strict';
 
+	// FIREBASE Code
+    const firebaseConfig = {
+        apiKey: "AIzaSyCOJoHNmU3zNydZsUVBtlNHrDZEG3W2F2U",
+        authDomain: "tjone-23938.firebaseapp.com",
+        databaseURL: "https://tjone-23938-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "tjone-23938",
+        storageBucket: "tjone-23938.firebasestorage.app",
+        messagingSenderId: "759655137456",
+        appId: "1:759655137456:web:757c171f298fee00a6bb75"
+    };
+
+    // Initialize only once
+    const firebase = window.firebase;
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.database();
+    //console.log("Database URL:", db.app.options.databaseURL);
+
+    db.ref("QX_DAILY_STATS/" + getToday()).on("value", function (snapshot) {
+        if (!snapshot.exists()) return;
+        const data = snapshot.val();
+        TradeTotal = data.total || 0;
+        TradeWin = data.win || 0;
+        TradeLoss = data.loss || 0;
+        PNLTotal = data.pnl || 0;
+
+        UpdatePNLDisplay();
+    });
+
+	
     // automatically open the real demo page.
     if (window.location.pathname === "/en/trade") {
         window.location.replace("/en/demo-trade");
@@ -39,31 +70,69 @@
         return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
     }
 
-    function SaveDailyStats() {
-        PNLTotal = parseFloat(PNLTotal) || 0;
-        PNLTotal = +PNLTotal.toFixed(2);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({date: getToday(), total: TradeTotal, win: TradeWin, loss: TradeLoss, pnl: PNLTotal}));
+    // function SaveDailyStats() {
+    //     PNLTotal = parseFloat(PNLTotal) || 0;
+    //     PNLTotal = +PNLTotal.toFixed(2);
+    //     localStorage.setItem(STORAGE_KEY, JSON.stringify({date: getToday(), total: TradeTotal, win: TradeWin, loss: TradeLoss, pnl: PNLTotal}));
+    // }
+
+    async function SaveDailyStats() {
+        console.log("SaveDailyStats() started");
+
+        try {
+            console.log("Before set()");
+            PNLTotal = +parseFloat(PNLTotal || 0).toFixed(2);
+            await db.ref("QX_DAILY_STATS/" + getToday()).set({total: TradeTotal, win: TradeWin, loss: TradeLoss, pnl: PNLTotal});
+            console.log("After set()");
+            console.log("✅ Saved to Firebase", {total: TradeTotal, win: TradeWin, loss: TradeLoss, pnl: PNLTotal});
+        }
+        catch (err) {
+            console.error("❌ Firebase write failed");
+            console.error(err);
+        }
+
+        console.log("SaveDailyStats() finished");
     }
 
-    function LoadDailyStats() {
-        const today = getToday();
-        const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    //     function LoadDailyStats() {
+//         const today = getToday();
+//         const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
-        if (!data || data.date !== today) {
+//         if (!data || data.date !== today) {
+//             TradeTotal = 0;
+//             TradeWin = 0;
+//             TradeLoss = 0;
+//             PNLTotal = 0;
+
+//             SaveDailyStats();
+//             return;
+//         }
+
+//         TradeTotal = data.total || 0;
+//         TradeWin = data.win || 0;
+//         TradeLoss = data.loss || 0;
+//         PNLTotal = parseFloat(data.pnl) || 0;
+//         console.table({TradeTotal, TradeWin, TradeLoss, PNLTotal: +PNLTotal.toFixed(2)});
+//     }
+
+
+    async function LoadDailyStats() {
+        const snap = await db.ref("QX_DAILY_STATS/" + getToday()).get();
+        if (!snap.exists()) {
             TradeTotal = 0;
             TradeWin = 0;
             TradeLoss = 0;
             PNLTotal = 0;
-
-            SaveDailyStats();
+            await SaveDailyStats();
             return;
         }
 
+        const data = snap.val();
         TradeTotal = data.total || 0;
         TradeWin = data.win || 0;
         TradeLoss = data.loss || 0;
-        PNLTotal = parseFloat(data.pnl) || 0;
-        console.table({TradeTotal, TradeWin, TradeLoss, PNLTotal: +PNLTotal.toFixed(2)});
+        PNLTotal = data.pnl || 0;
+        UpdatePNLDisplay();
     }
 
     LoadDailyStats();
