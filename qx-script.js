@@ -123,7 +123,7 @@
         }
         else if (PNLTotal < 0) {
             pnlElement.style.color = "#ff3d00";
-            pnlPositionBar.style.width = "10%";
+            pnlPositionBar.style.width = "9%";
         }
         else {
             pnlElement.style.color = "#00c853";
