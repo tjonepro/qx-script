@@ -118,10 +118,12 @@
         });
 
         if (PNLTotal > 0) {
+			pnlElement.textContent = "$" + Math.abs(PNLTotal).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
             pnlElement.style.color = "#00c853";
             pnlPositionBar.style.width = "96%";
         }
         else if (PNLTotal < 0) {
+			pnlElement.textContent = Math.abs(PNLTotal).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + "$";
             pnlElement.style.color = "#ff3d00";
             pnlPositionBar.style.width = "8%";
         }
