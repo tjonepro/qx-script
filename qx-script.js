@@ -396,7 +396,7 @@
         // Change "Demo Account" -> "Live Account"
         const isMobile = window.innerWidth <= 768;
         //const el = document.querySelector("div.v2KPX.lTzTl");
-		const el = document.querySelector("div.name.demo");
+		const el = document.querySelector("div.QE4Zb.name.demo");
 
         if (el) {
             el.textContent = isMobile ? "Live" : "Live Account";
