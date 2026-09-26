@@ -395,11 +395,13 @@
 
         // Change "Demo Account" -> "Live Account"
         const isMobile = window.innerWidth <= 768;
-        const el = document.querySelector("div.v2KPX.lTzTl");
+        //const el = document.querySelector("div.v2KPX.lTzTl");
+		const el = document.querySelector("div.name.demo");
 
         if (el) {
             el.textContent = isMobile ? "Live" : "Live Account";
-            el.classList.replace("lTzTl", "X6PB5");
+            //el.classList.replace("lTzTl", "X6PB5");
+			el.classList.replace("demo", "live");
         }
 
         // Change SVG class and icon based on account level
